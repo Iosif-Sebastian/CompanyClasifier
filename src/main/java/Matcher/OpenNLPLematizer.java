@@ -1,4 +1,4 @@
-package com.example;
+package Matcher;
 
 import opennlp.tools.lemmatizer.DictionaryLemmatizer;
 import opennlp.tools.tokenize.SimpleTokenizer;
@@ -10,41 +10,37 @@ public class OpenNLPLematizer {
     private static DictionaryLemmatizer lemmatizer;
     private final String text;
 
-    // Static block to load the dictionary
+    // Static block to load the dictionary only once
     static {
-        try {
-            // Load the lemmatizer dictionary
-            InputStream lemmatizerStream = new FileInputStream("src/main/resources/en-lemmatizer.dict");
+        try (InputStream lemmatizerStream = new FileInputStream("src/main/resources/en-lemmatizer.dict")) {
             lemmatizer = new DictionaryLemmatizer(lemmatizerStream);
-            lemmatizerStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error loading lemmatizer dictionary", e);
         }
     }
 
-    // Constructor that accepts a text to lemmatize
     public OpenNLPLematizer(String text) {
-        this.text = text; // Initialize the 'text' variable
+        this.text = text;
     }
 
-    // Method to lemmatize the provided text
     public String lemmatizeText() {
-        SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;  // Tokenize the text
+        SimpleTokenizer tokenizer = SimpleTokenizer.INSTANCE;
         String[] tokens = tokenizer.tokenize(text);
 
-        // The POS tags here are dummy values because we are not using them for lemmatization
-        String[] dummyPosTags = new String[tokens.length];
+        // Assign "NN" (noun) as a default POS tag
+        String[] posTags = new String[tokens.length];
         for (int i = 0; i < tokens.length; i++) {
-            dummyPosTags[i] = "NN";  // Assuming all words are noun-like for lemmatization
+            posTags[i] = "NN";
         }
 
-        String[] lemmas = lemmatizer.lemmatize(tokens, dummyPosTags);
+        String[] lemmas = lemmatizer.lemmatize(tokens, posTags);
 
-        // Create the lemmatized text as a space-separated string
+        // Build the final lemmatized text
         StringJoiner lemmatizedText = new StringJoiner(" ");
-        for (String lemma : lemmas) {
-            lemmatizedText.add(lemma.equals("O") ? "-" : lemma);  // If lemmatized result is 'O', replace with "-"
+        for (int i = 0; i < lemmas.length; i++) {
+            // If lemmatization fails ("O"), keep the original word
+            lemmatizedText.add(lemmas[i].equals("O") ? tokens[i] : lemmas[i]);
         }
-        return lemmatizedText.toString();  // Return the lemmatized text
+        return lemmatizedText.toString();
     }
 }
