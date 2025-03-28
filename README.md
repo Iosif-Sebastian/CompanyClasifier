@@ -23,6 +23,7 @@ The ExcelReader class is responsible for reading the label data from an Excel fi
 •	The preprocessLabels() method reads the Excel file containing the labels, applies lemmatization, and stores the lemmatized version of each label in a separate file. It also creates a map (labelMapWords) where each label is linked to its corresponding set of lemmatized words.
 •	The readLemmatizedLabels() method loads the preprocessed label file and populates the map again, so the Companies class can use it for matching.
 Reasoning for this structure: I separated the logic for reading and processing labels into a different class to maintain separation of concerns. The Companies class should not be burdened with the complexities of reading and preprocessing labels; this is the responsibility of the ExcelReader class. This way, if I need to change how labels are processed, I can modify ExcelReader without affecting the rest of the code.
+
 Step 3: Matching and Writing Data Back to Excel
 Once the company descriptions and labels were lemmatized, the matching process began. The Companies class compares the lemmatized company text with the lemmatized labels.
 I chose to use a set-based approach for matching: each label’s lemmatized form is stored as a set of words, and I check if any of those words appear in the company’s description.
