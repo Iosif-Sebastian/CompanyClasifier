@@ -22,6 +22,14 @@ Reasoning for this structure: This class ensures that all interactions between E
 The ExcelReader class is responsible for reading the label data from an Excel file, preprocessing it (lemmatizing), and storing it in a way that’s easy to search during the matching process. The class also has methods to retrieve preprocessed labels when needed.
 •	The preprocessLabels() method reads the Excel file containing the labels, applies lemmatization, and stores the lemmatized version of each label in a separate file. It also creates a map (labelMapWords) where each label is linked to its corresponding set of lemmatized words.
 •	The readLemmatizedLabels() method loads the preprocessed label file and populates the map again, so the Companies class can use it for matching.
+
+3. OpenNLPLematizer Class – Lemmatizing Text
+The OpenNLPLematizer class is crucial for the lemmatization of the text. Lemmatization converts words to their root form (e.g., "running" becomes "run"). Without this, comparing company descriptions to labels would be difficult due to variations in word forms.
+
+Static block: The lemmatizer is initialized only once using a dictionary (en-lemmatizer.dict). This avoids the need to reload the dictionary multiple times, ensuring the program runs more efficiently.
+
+lemmatizeText() method: This method processes the input text (e.g., company descriptions or label text), splits it into tokens (words), and lemmatizes them. It uses default POS tags for simplicity, treating all words as nouns.
+
 Reasoning for this structure: I separated the logic for reading and processing labels into a different class to maintain separation of concerns. The Companies class should not be burdened with the complexities of reading and preprocessing labels; this is the responsibility of the ExcelReader class. This way, if I need to change how labels are processed, I can modify ExcelReader without affecting the rest of the code.
 
 Step 3: Matching and Writing Data Back to Excel
