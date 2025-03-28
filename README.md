@@ -32,14 +32,21 @@ Reasoning for this structure: I used a set-based comparison because it’s a fas
 
 
 Challenges Encountered and How They Were Addressed
+
 •	Label Variations: One of the main challenges was ensuring that different word forms (e.g., "run" vs "running") didn’t prevent labels from matching. Lemmatization solved this problem, but I had to carefully ensure that the lemmatizer worked correctly and didn’t miss any edge cases. I used a default POS tag for simplicity, but in a real-world scenario, I might need to refine this approach.
+
 •	Handling Excel Files: Another challenge was dealing with Excel files that might not always be in the expected format. I had to ensure that the "Matched Labels" column was added correctly and that the program didn’t overwrite any existing data in the file. To handle this, I checked if the column existed and added it if necessary.
+
 •	Efficiency: With larger datasets, efficiency could become a concern. In the current approach, the company descriptions and labels are loaded into memory at once, which could be improved by processing data in chunks. In future versions, I might explore more memory-efficient techniques for large datasets.
+
 Conclusion
+
 In this project, my approach to solving the problem was by breaking it down into smaller tasks, each with a specific focus:
 1.	Reading the data (with ExcelReader).
 2.	Lemmatizing the text (with OpenNLPLematizer).
 3.	Matching the company data to labels (with Companies).
 4.	Updating the Excel file with the results.
+
 By focusing on simplicity (using OpenNLP for lemmatization, leveraging Apache POI for Excel processing), I created a solution that balances accuracy and efficiency. The challenges were addressed by keeping things flexible and ensuring that the logic was isolated in different classes.
+
 I’m happy with the solution because it’s clean, organized, and easy to maintain. It’s also scalable: should the dataset grow or require more sophisticated processing, I can update the respective classes without affecting the rest of the flow.
