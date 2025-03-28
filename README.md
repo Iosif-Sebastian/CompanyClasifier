@@ -1,4 +1,3 @@
-The Problem:
 The task involves classifying companies based on their descriptions, sectors, niches, and other relevant information by matching them to labels. At first glance, this seems straightforward: read data, compare it with predefined labels, and update the records. However, several challenges needed to be addressed, including text variation (e.g., different word forms like "running" vs "run") and ensuring accurate matching even with potentially inconsistent data.
 The solution needed to:
 1.	Process company data from an Excel file.
