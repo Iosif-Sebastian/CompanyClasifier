@@ -23,11 +23,11 @@ The ExcelReader class is responsible for reading the label data from an Excel fi
 •	The readLemmatizedLabels() method loads the preprocessed label file and populates the map again, so the Companies class can use it for matching.
 
 3. OpenNLPLematizer Class – Lemmatizing Text
-The OpenNLPLematizer class is crucial for the lemmatization of the text. Lemmatization converts words to their root form (e.g., "running" becomes "run"). Without this, comparing company descriptions to labels would be difficult due to variations in word forms.
+  The OpenNLPLematizer class is crucial for the lemmatization of the text. Lemmatization converts words to their root form (e.g., "running" becomes "run"). Without this, comparing company descriptions to labels     would be difficult due to variations in word forms.
 
-Static block: The lemmatizer is initialized only once using a dictionary (en-lemmatizer.dict). This avoids the need to reload the dictionary multiple times, ensuring the program runs more efficiently.
+  Static block: The lemmatizer is initialized only once using a dictionary (en-lemmatizer.dict). This avoids the need to reload the dictionary multiple times, ensuring the program runs more efficiently.
 
-lemmatizeText() method: This method processes the input text (e.g., company descriptions or label text), splits it into tokens (words), and lemmatizes them. It uses default POS tags for simplicity, treating all words as nouns.
+  lemmatizeText() method: This method processes the input text (e.g., company descriptions or label text), splits it into tokens (words), and lemmatizes them. It uses default POS tags for simplicity, treating all   words as nouns.
 
 Reasoning for this structure: I separated the logic for reading and processing labels into a different class to maintain separation of concerns. The Companies class should not be burdened with the complexities of reading and preprocessing labels; this is the responsibility of the ExcelReader class. This way, if I need to change how labels are processed, I can modify ExcelReader without affecting the rest of the code.
 
